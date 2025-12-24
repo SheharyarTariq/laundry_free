@@ -13,14 +13,13 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use Symfony\Component\Serializer\Annotation\Groups;
-use App\Processor\RegisterProcessor;
-use App\Processor\VerifyProcessor;
-use App\Processor\ResendVerificationProcessor;
-use App\Processor\ForgetPasswordProcessor;
-use App\Processor\ResetPasswordProcessor;
-//Todo: why above path is not correct like why User path is not like src\Processor\User\RegisterProcessor.php
+use App\Processor\User\RegisterProcessor;
+use App\Processor\User\VerifyProcessor;
+use App\Processor\User\ResendVerificationProcessor;
+use App\Processor\User\ForgetPasswordProcessor;
+use App\Processor\User\ResetPasswordProcessor;
 
-use App\Provider\ProfileProvider;
+use App\Provider\User\ProfileProvider;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
