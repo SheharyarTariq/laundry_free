@@ -12,12 +12,14 @@ use Symfony\Component\Uid\Uuid;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Put;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Processor\User\RegisterProcessor;
 use App\Processor\User\VerifyProcessor;
 use App\Processor\User\ResendVerificationProcessor;
 use App\Processor\User\ForgetPasswordProcessor;
 use App\Processor\User\ResetPasswordProcessor;
+use App\Processor\User\ProfileProcessor;
 
 use App\Provider\User\ProfileProvider;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -40,6 +42,15 @@ use Symfony\Component\Validator\Constraints as Assert;
             security: "is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')",
             normalizationContext: [
                 'groups' => ['User:V$Profile']
+            ],
+        ),
+        new Put(
+            uriTemplate: '/profile',
+            processor: ProfileProcessor::class,
+            validate: false,
+            security: "is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')",
+            denormalizationContext: [
+                'groups' => ['User:W$UpdateProfile']
             ],
         ),
         new Post(
@@ -94,7 +105,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 )]
 
 #[UniqueEntity(fields: ['email'], message: 'This email is already registered. Please use a different email or try logging in.')]
-#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Entity(repositoryClass: UserRepository::class)] //Todo: why repositoryClass is UserRepository. why we created it. (AI)
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -111,7 +122,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public string $email;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['User:V$Create', 'User:W$Create', 'User:V$Profile'])]
+    #[Groups(['User:V$Create', 'User:W$Create', 'User:V$Profile', 'User:W$UpdateProfile'])]
     #[Assert\NotBlank(message: 'Full name is required')]
     #[Assert\Length(
         min: 2,
@@ -122,7 +133,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public string $fullName;
 
     #[ORM\Column(length: 20)]
-    #[Groups(['User:V$Create', 'User:W$Create', 'User:V$Profile'])]
+    #[Groups(['User:V$Create', 'User:W$Create', 'User:V$Profile', 'User:W$UpdateProfile'])]
     #[Assert\NotBlank(message: 'Phone number is required')]
     #[Assert\Regex(
         pattern: '/^\+44\d{10}$/',
@@ -145,6 +156,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     #[Groups(['User:V$Create', 'User:V$Verify', 'User:V$Profile'])]
     public bool $isActive = false;
+
+    #[ORM\Column(length: 255)]
+    #[Groups(['User:W$UpdateProfile', 'User:V$Profile'])]
+    #[Assert\NotBlank(message: 'Postcode is required')]
+    #[Assert\Regex(
+        pattern: '/^([A-Z]{1,2}\d[A-Z\d]?|ASCN|STHL|TDCU|BBND|[BFS]IQQ|PCRN|TKCA) ?\d[A-Z]{2}$/i',
+        message: 'Please enter a valid UK postcode (e.g., SW1A 1AA, EC1A 1BB)'
+    )]
+    public string $postcode;
+
+    #[ORM\Column(length: 255)]
+    #[Groups(['User:W$UpdateProfile', 'User:V$Profile'])]
+    #[Assert\NotBlank(message: 'Address line 1 is required')]
+    public string $addressLine1;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['User:W$UpdateProfile', 'User:V$Profile'])]
+    public ?string $addressLine2 = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['User:W$UpdateProfile', 'User:V$Profile'])]
+    public ?string $city = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['User:W$UpdateProfile', 'User:V$Profile'])]
+    public ?string $country = null;
+
 
     #[ORM\Column]
     #[Groups(['User:V$Verify', 'User:W$ResetPassword'])]
@@ -182,6 +220,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): static
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getPostCode(): string
+    {
+        return $this->postcode;
+    }
+
+    public function setPostCode(string $postcode): static
+    {
+        // Always uppercase the postcode before storing
+        $this->postcode = strtoupper($postcode);
 
         return $this;
     }
