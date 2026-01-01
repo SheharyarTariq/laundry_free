@@ -16,9 +16,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
+    security: "is_granted('ROLE_ADMIN')",
     operations: [
         new Post(
-            security: "is_granted('ROLE_ADMIN')",
             normalizationContext: [
                 'groups' => ['Postcode:V$Create']
             ],
@@ -28,25 +28,20 @@ use Symfony\Component\Validator\Constraints as Assert;
         ),
 
         new Get(
-            security: "is_granted('ROLE_ADMIN')",
             normalizationContext: [
                 'groups' => ['Postcode:V$Detail']
             ],
         ),
 
         new GetCollection(
-            security: "is_granted('ROLE_ADMIN')",
             normalizationContext: [
                 'groups' => ['Postcode:V$List']
             ],
         ),
 
-        new Delete(
-            security: "is_granted('ROLE_ADMIN')",
-        ),
+        new Delete(),
 
         new Put(
-            security: "is_granted('ROLE_ADMIN')",
             normalizationContext: [
                 'groups' => ['Postcode:V$Update']
             ],
@@ -59,7 +54,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[UniqueEntity(fields: ['postcode'], message: 'This postcode already exists.')]
 #[ORM\Entity]
-#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_POSTCODE', fields: ['postcode'])]
+#[ORM\UniqueConstraint(name: 'postcode__postcode', fields: ['postcode'])]
 #[ORM\HasLifecycleCallbacks]
 class Postcode
 {
@@ -67,11 +62,23 @@ class Postcode
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-    #[Groups(['Postcode:V$Create', 'Postcode:V$Detail', 'Postcode:V$List', 'Postcode:V$Update'])]
+    #[Groups([
+        'Postcode:V$Create',
+        'Postcode:V$Detail',
+        'Postcode:V$List',
+        'Postcode:V$Update'
+        ])]
     public Uuid $id;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['Postcode:V$Create', 'Postcode:V$Detail', 'Postcode:V$List', 'Postcode:V$Update', 'Postcode:W$Create', 'Postcode:W$Update'])]
+    #[Groups([
+        'Postcode:V$Create', 
+        'Postcode:V$Detail', 
+        'Postcode:V$List', 
+        'Postcode:V$Update', 
+        'Postcode:W$Create', 
+        'Postcode:W$Update'
+        ])]
     #[Assert\NotBlank(message: 'Postcode name is required')]
     #[Assert\Regex(
         pattern: '/^([A-Z]{1,2}\d[A-Z\d]?|ASCN|STHL|TDCU|BBND|[BFS]IQQ|PCRN|TKCA) ?\d[A-Z]{2}$/i',
@@ -81,17 +88,32 @@ class Postcode
 
     #[ORM\ManyToOne(targetEntity: Area::class, inversedBy: 'postcodes')]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
-    #[Groups(['Postcode:V$Create', 'Postcode:V$Detail', 'Postcode:V$List', 'Postcode:V$Update', 'Postcode:W$Create'])]
+    #[Groups([
+        'Postcode:V$Create', 
+        'Postcode:V$Detail', 
+        'Postcode:V$List', 
+        'Postcode:V$Update', 
+        'Postcode:W$Create', 
+        'Postcode:W$Update'
+        ])]
     #[Assert\NotNull(message: 'Area is required')]
     private ?Area $area = null;
 
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(['Postcode:V$Create', 'Postcode:V$Detail', 'Postcode:V$List'])]
+    #[Groups([
+        'Postcode:V$Create', 
+        'Postcode:V$Detail', 
+        'Postcode:V$List'
+        ])]
     public \DateTime $createdAt;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(['Postcode:V$Create', 'Postcode:V$Detail', 'Postcode:V$List'])]
+    #[Groups([
+        'Postcode:V$Create', 
+        'Postcode:V$Detail', 
+        'Postcode:V$List'
+        ])]
     public \DateTime $updatedAt;
 
     public function __construct()
