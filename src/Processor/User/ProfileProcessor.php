@@ -35,13 +35,11 @@ class ProfileProcessor implements ProcessorInterface
         }
 
         if (isset($data->phoneNumber)) {
-            Assert::notEmpty($data->phoneNumber, 'Phone number cannot be empty');
             Assert::regex($data->phoneNumber, '/^\+44\d{10}$/', 'Phone number must be in UK format: +44 followed by 10 digits (e.g., +441234567890)');
             $user->phoneNumber = $data->phoneNumber;
         }
 
         if (isset($data->postcode)) {
-            Assert::notEmpty($data->postcode, 'Postcode cannot be empty');
             Assert::regex($data->postcode, '/^([A-Z]{1,2}\d[A-Z\d]?|ASCN|STHL|TDCU|BBND|[BFS]IQQ|PCRN|TKCA) ?\d[A-Z]{2}$/i', 'Please enter a valid UK postcode (e.g., SW1A 1AA, EC1A 1BB)');
             // The setter will automatically uppercase the postcode
             $user->setPostcode($data->postcode);

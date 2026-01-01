@@ -19,9 +19,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 use App\Provider\Area\AreaPostcodesProvider;
 
 #[ApiResource(
+    security: "is_granted('ROLE_ADMIN')",
     operations: [
         new Post(
-            security: "is_granted('ROLE_ADMIN')",
             normalizationContext: [
                 'groups' => ['Area:V$Create']
             ],
@@ -30,19 +30,15 @@ use App\Provider\Area\AreaPostcodesProvider;
             ],
         ),
 
-        new Delete(
-            security: "is_granted('ROLE_ADMIN')",
-        ),
+        new Delete(),
 
         new Get(
-            security: "is_granted('ROLE_ADMIN')",
             normalizationContext: [
                 'groups' => ['Area:V$Detail']
             ],
         ),
 
         new GetCollection(
-            security: "is_granted('ROLE_ADMIN')",
             normalizationContext: [
                 'groups' => ['Area:V$List']
             ],
@@ -51,14 +47,12 @@ use App\Provider\Area\AreaPostcodesProvider;
         new GetCollection(
             uriTemplate: '/areas/{id}/postcodes',
             provider: AreaPostcodesProvider::class,
-            security: "is_granted('ROLE_ADMIN')",
             normalizationContext: [
                 'groups' => ['Postcode:V$List']
             ],
         ),
 
         new Put(
-            security: "is_granted('ROLE_ADMIN')",
             normalizationContext: [
                 'groups' => ['Area:V$Update']
             ],
@@ -72,7 +66,7 @@ use App\Provider\Area\AreaPostcodesProvider;
 #[UniqueEntity(fields: ['area'], message: 'This area name already exists.')]
 #[ORM\Entity]
 #[ORM\Table(name: '`area`')]
-#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_AREA', fields: ['area'])]
+#[ORM\UniqueConstraint(name: 'area__area', fields: ['area'])] //Todo: here is it correct: area__area className_fieldName
 #[ORM\HasLifecycleCallbacks]
 class Area
 {
@@ -80,11 +74,23 @@ class Area
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-    #[Groups(['Area:V$Create', 'Area:V$Detail', 'Area:V$List', 'Area:V$Update'])]
+    #[Groups([
+        'Area:V$Create',
+        'Area:V$Detail',
+        'Area:V$List',
+        'Area:V$Update'
+    ])]
     public Uuid $id;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['Area:V$Create', 'Area:V$Detail', 'Area:V$List', 'Area:V$Update', 'Area:W$Create', 'Area:W$Update'])]
+    #[Groups([
+        'Area:V$Create',
+        'Area:V$Detail',
+        'Area:V$List',
+        'Area:V$Update',
+        'Area:W$Create',
+        'Area:W$Update'
+    ])]
     #[Assert\NotBlank(message: 'Area name is required')]
     #[Assert\Length(
         min: 2,
@@ -98,15 +104,26 @@ class Area
      * @var Collection<int, Postcode>
      */
     #[ORM\OneToMany(targetEntity: Postcode::class, mappedBy: 'area', cascade: ['persist', 'remove'], orphanRemoval: true)]
-    #[Groups(['Area:V$Detail', 'Area:V$Postcodes'])]
+    #[Groups([
+        'Area:V$Detail', 
+        'Area:V$Postcodes'
+    ])]
     private Collection $postcodes;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(['Area:V$Create', 'Area:V$Detail', 'Area:V$List'])]
+    #[Groups([
+        'Area:V$Create',
+        'Area:V$Detail',
+        'Area:V$List'
+    ])]
     public \DateTime $createdAt;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(['Area:V$Create', 'Area:V$Detail', 'Area:V$List'])]
+    #[Groups([
+        'Area:V$Create',
+        'Area:V$Detail',
+        'Area:V$List'
+    ])]
     public \DateTime $updatedAt;
 
     public function __construct()
