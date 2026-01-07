@@ -19,48 +19,57 @@ use Symfony\Component\Validator\Constraints as Assert;
 use App\Provider\Area\AreaPostcodesProvider;
 
 #[ApiResource(
-    security: "is_granted('ROLE_ADMIN')",
-    operations: [
-        new Post(
-            normalizationContext: [
-                'groups' => ['Area:V$Create']
-            ],
-            denormalizationContext: [
-                'groups' => ['Area:W$Create']
-            ],
-        ),
+  security: "is_granted('ROLE_ADMIN')",
+  operations: [
+    new Post(
+      processor: \App\Processor\Area\AreaCreateProcessor::class,
+      normalizationContext: [
+        'groups' => ['Area:V$Create']
+      ],
+      denormalizationContext: [
+        'groups' => ['Area:W$Create']
+      ],
+    ),
 
-        new Delete(),
+    new Delete(),
 
-        new Get(
-            normalizationContext: [
-                'groups' => ['Area:V$Detail']
-            ],
-        ),
+    new Get(
+      normalizationContext: [
+        'groups' => ['Area:V$Detail']
+      ],
+    ),
 
-        new GetCollection(
-            normalizationContext: [
-                'groups' => ['Area:V$List']
-            ],
-        ),
+    new GetCollection(
+      normalizationContext: [
+        'groups' => ['Area:V$List']
+      ],
+    ),
 
-        new GetCollection(
-            uriTemplate: '/areas/{id}/postcodes',
-            provider: AreaPostcodesProvider::class,
-            normalizationContext: [
-                'groups' => ['Postcode:V$List']
-            ],
-        ),
+    new GetCollection(
+      uriTemplate: '/areas/{id}/postcodes',
+      provider: AreaPostcodesProvider::class,
+      normalizationContext: [
+        'groups' => ['Postcode:V$List']
+      ],
+    ),
 
-        new Put(
-            normalizationContext: [
-                'groups' => ['Area:V$Update']
-            ],
-            denormalizationContext: [
-                'groups' => ['Area:W$Update']
-            ],
-        )
-    ]
+    new GetCollection(
+      uriTemplate: '/areas/{id}/time-slots',
+      provider: \App\Provider\Area\AreaTimeSlotsProvider::class,
+      normalizationContext: [
+        'groups' => ['TimeSlot:V$List']
+      ],
+    ),
+
+    new Put(
+      normalizationContext: [
+        'groups' => ['Area:V$Update']
+      ],
+      denormalizationContext: [
+        'groups' => ['Area:W$Update']
+      ],
+    )
+  ]
 )]
 
 #[UniqueEntity(fields: ['area'], message: 'This area name already exists.')]
@@ -70,102 +79,136 @@ use App\Provider\Area\AreaPostcodesProvider;
 #[ORM\HasLifecycleCallbacks]
 class Area
 {
-    #[ORM\Id]
-    #[ORM\Column(type: UuidType::NAME, unique: true)]
-    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
-    #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-    #[Groups([
-        'Area:V$Create',
-        'Area:V$Detail',
-        'Area:V$List',
-        'Area:V$Update'
-    ])]
-    public Uuid $id;
+  #[ORM\Id]
+  #[ORM\Column(type: UuidType::NAME, unique: true)]
+  #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+  #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
+  #[Groups([
+    'Area:V$Create',
+    'Area:V$Detail',
+    'Area:V$List',
+    'Area:V$Update'
+  ])]
+  public Uuid $id;
 
-    #[ORM\Column(length: 255)]
-    #[Groups([
-        'Area:V$Create',
-        'Area:V$Detail',
-        'Area:V$List',
-        'Area:V$Update',
-        'Area:W$Create',
-        'Area:W$Update'
-    ])]
-    #[Assert\NotBlank(message: 'Area name is required')]
-    #[Assert\Length(
-        min: 2,
-        max: 50,
-        minMessage: 'Area name must be at least {{ limit }} characters long',
-        maxMessage: 'Area name cannot be longer than {{ limit }} characters'
-    )]
-    public string $area;
+  #[ORM\Column(length: 255)]
+  #[Groups([
+    'Area:V$Create',
+    'Area:V$Detail',
+    'Area:V$List',
+    'Area:V$Update',
+    'Area:W$Create',
+    'Area:W$Update'
+  ])]
+  #[Assert\NotBlank(message: 'Area name is required')]
+  #[Assert\Length(
+    min: 2,
+    max: 50,
+    minMessage: 'Area name must be at least {{ limit }} characters long',
+    maxMessage: 'Area name cannot be longer than {{ limit }} characters'
+  )]
+  public string $area;
 
-    /**
-     * @var Collection<int, Postcode>
-     */
-    #[ORM\OneToMany(targetEntity: Postcode::class, mappedBy: 'area', cascade: ['persist', 'remove'], orphanRemoval: true)]
-    #[Groups([
-        'Area:V$Detail', 
-        'Area:V$Postcodes'
-    ])]
-    private Collection $postcodes;
+  /**
+   * @var Collection<int, Postcode>
+   */
+  #[ORM\OneToMany(targetEntity: Postcode::class, mappedBy: 'area', cascade: ['persist', 'remove'], orphanRemoval: true)]
+  #[Groups([
+    'Area:V$Detail',
+    'Area:V$Postcodes'
+  ])]
+  private Collection $postcodes;
 
-    #[ORM\Column(type: 'datetime')]
-    #[Groups([
-        'Area:V$Create',
-        'Area:V$Detail',
-        'Area:V$List'
-    ])]
-    public \DateTime $createdAt;
+  /**
+   * @var Collection<int, TimeSlot>
+   */
+  #[ORM\OneToMany(targetEntity: TimeSlot::class, mappedBy: 'area', cascade: ['persist', 'remove'], orphanRemoval: true)]
+  #[Groups([
+    'Area:V$Detail'
+  ])]
+  private Collection $timeSlots;
 
-    #[ORM\Column(type: 'datetime')]
-    #[Groups([
-        'Area:V$Create',
-        'Area:V$Detail',
-        'Area:V$List'
-    ])]
-    public \DateTime $updatedAt;
+  #[ORM\Column(type: 'datetime')]
+  #[Groups([
+    'Area:V$Create',
+    'Area:V$Detail',
+    'Area:V$List'
+  ])]
+  public \DateTime $createdAt;
 
-    public function __construct()
-    {
-        $this->postcodes = new ArrayCollection();
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
+  #[ORM\Column(type: 'datetime')]
+  #[Groups([
+    'Area:V$Create',
+    'Area:V$Detail',
+    'Area:V$List'
+  ])]
+  public \DateTime $updatedAt;
+
+  public function __construct()
+  {
+    $this->postcodes = new ArrayCollection();
+    $this->timeSlots = new ArrayCollection();
+    $this->createdAt = new \DateTime();
+    $this->updatedAt = new \DateTime();
+  }
+
+  /**
+   * @return Collection<int, Postcode>
+   */
+  public function getPostcodes(): Collection
+  {
+    return $this->postcodes;
+  }
+
+  public function addPostcode(Postcode $postcode): static
+  {
+    if (!$this->postcodes->contains($postcode)) {
+      $this->postcodes->add($postcode);
+      $postcode->setArea($this);
     }
 
-    /**
-     * @return Collection<int, Postcode>
-     */
-    public function getPostcodes(): Collection
-    {
-        return $this->postcodes;
+    return $this;
+  }
+
+  public function removePostcode(Postcode $postcode): static
+  {
+    if ($this->postcodes->removeElement($postcode)) {
+      // set the owning side to null (unless already changed)
+      if ($postcode->getArea() === $this) {
+        $postcode->setArea(null);
+      }
     }
 
-    public function addPostcode(Postcode $postcode): static
-    {
-        if (!$this->postcodes->contains($postcode)) {
-            $this->postcodes->add($postcode);
-            $postcode->setArea($this);
-        }
+    return $this;
+  }
 
-        return $this;
+  /**
+   * @return Collection<int, TimeSlot>
+   */
+  public function getTimeSlots(): Collection
+  {
+    return $this->timeSlots;
+  }
+
+  public function addTimeSlot(TimeSlot $timeSlot): static
+  {
+    if (!$this->timeSlots->contains($timeSlot)) {
+      $this->timeSlots->add($timeSlot);
+      $timeSlot->area = $this;
     }
 
-    public function removePostcode(Postcode $postcode): static
-    {
-        if ($this->postcodes->removeElement($postcode)) {
-            // set the owning side to null (unless already changed)
-            if ($postcode->getArea() === $this) {
-                $postcode->setArea(null);
-            }
-        }
+    return $this;
+  }
 
-        return $this;
-    }
+  public function removeTimeSlot(TimeSlot $timeSlot): static
+  {
+    $this->timeSlots->removeElement($timeSlot);
+    return $this;
+  }
 
-    #[ORM\PreUpdate]
-    public function setUpdatedAtValue(): void
-    {
-        $this->updatedAt = new \DateTime();
-    }
+  #[ORM\PreUpdate]
+  public function setUpdatedAtValue(): void
+  {
+    $this->updatedAt = new \DateTime();
+  }
 }

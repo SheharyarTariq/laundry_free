@@ -15,8 +15,6 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Put;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Processor\User\RegisterProcessor;
-use App\Processor\User\VerifyProcessor;
-use App\Processor\User\ResendVerificationProcessor;
 use App\Processor\User\ProfileProcessor;
 
 use App\Provider\User\ProfileProvider;
@@ -57,33 +55,6 @@ use Symfony\Component\Validator\Constraints as Assert;
         'groups' => ['User:W$UpdateProfile']
       ],
     ),
-    new Post(
-      uriTemplate: '/verify',
-      processor: VerifyProcessor::class,
-      validate: false, //Todo: why validate is false
-      validationContext: [
-        'groups' => ['Default', 'Valid(User:Verify)']
-      ],
-      output: false,  //Todo: why output is false. output is for Dto
-      normalizationContext: [
-        'groups' => ['User:V$Verify']
-      ],
-      denormalizationContext: [
-        'groups' => ['User:W$Verify']
-      ],
-    ),
-    new Post(
-      uriTemplate: '/resend-verification',
-      processor: ResendVerificationProcessor::class,
-      validate: false,
-      output: false,
-      normalizationContext: [
-        'groups' => ['User:V$Resend']
-      ],
-      denormalizationContext: [
-        'groups' => ['User:W$Resend']
-      ],
-    ),
   ]
 )]
 
@@ -105,13 +76,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
   #[ORM\Column(length: 180)]
   #[Assert\Email(
-    groups: ['Valid(User:Register)', 'Valid(User:Verify)'],
+    groups: ['Valid(User:Register)'],
   )]
   #[Groups([
     'User:V$Create',
     'User:W$Create',
-    'User:W$Verify',
-    'User:W$Resend',
     'User:V$Profile',
   ])]
   public string $email;
@@ -175,7 +144,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
   #[ORM\Column]
   #[Groups([
     'User:V$Create',
-    'User:V$Verify',
     'User:V$Profile'
   ])]
   public bool $isActive = false;
@@ -223,15 +191,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 
   #[ORM\Column]
-  #[Groups([
-    'User:V$Verify',
-  ])]
   public string $verificationCode = '';
 
   #[ORM\Column]
-  #[Groups([
-    'User:V$Verify'
-  ])]
   public int $verificationCodeExpiry = 0;
 
   #[ORM\Column(type: 'datetime_immutable', nullable: true)]
