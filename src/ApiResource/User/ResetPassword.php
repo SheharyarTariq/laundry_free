@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
       validationContext: ['groups' => ['Default', 'Valid(ResetPassword:Request)']],
       denormalizationContext: [
         'groups' => [
-          'ResetPassword:W',
+          'ResetPassword:Request',
         ],
       ],
       status: Response::HTTP_OK,
@@ -30,7 +30,7 @@ use Symfony\Component\Validator\Constraints as Assert;
       validationContext: ['groups' => ['Default', 'Valid(ResetPassword:Confirm)']],
       denormalizationContext: [
         'groups' => [
-          'ResetPassword:W',
+          'ResetPassword:Confirm',
         ],
       ],
       status: Response::HTTP_OK,
@@ -51,15 +51,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ResetPassword
 {
   #[Assert\NotBlank(groups: ['Valid(ResetPassword:Request)', 'Valid(ResetPassword:Confirm)'])]
-  #[Groups(['ResetPassword:W'])]
+  #[Groups(['ResetPassword:Request', 'ResetPassword:Confirm'])]
   public string $email;
 
   #[Assert\NotBlank(groups: ['Valid(ResetPassword:Confirm)'])]
-  #[Groups(['ResetPassword:W'])]
+  #[Groups(['ResetPassword:Confirm'])]
   public string $token;
 
-  #[Assert\NotBlank(groups: ['Valid(ResetPassword:Reset)', 'Valid(ResetPassword:$SetPassword)', 'Valid(ResetPassword:Change)'])]
-  #[Groups(['ResetPassword:W', 'ResetPassword:W$ChangePassword'])]
+  #[Assert\NotBlank(groups: ['Valid(ResetPassword:Reset)', 'Valid(ResetPassword:Confirm)', 'Valid(ResetPassword:Change)'])]
+  #[Groups(['ResetPassword:W$ChangePassword', 'ResetPassword:Confirm'])]
   public string $newPassword;
 
   #[Assert\NotBlank(groups: ['Valid(ResetPassword:Change)'])]
