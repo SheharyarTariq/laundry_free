@@ -1,0 +1,136 @@
+<?php //property_metadata_e197df43a1a607e3
+
+return [PHP_INT_MAX, new class() implements \Symfony\Component\Cache\Traits\CachedValueInterface { public function getValue(): mixed { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['ApiPlatform\\Metadata\\ApiProperty'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('ApiPlatform\\Metadata\\ApiProperty')),
+        clone ($p['Symfony\\Component\\TypeInfo\\Type\\BuiltinType'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\TypeInfo\\Type\\BuiltinType')),
+        clone ($p['Symfony\\Component\\PropertyInfo\\Type'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\PropertyInfo\\Type')),
+    ],
+    null,
+    [
+        'ApiPlatform\\Metadata\\ApiProperty' => [
+            'types' => [
+                null,
+            ],
+            'serialize' => [
+                null,
+            ],
+            'nativeType' => [
+                $o[1],
+            ],
+            'description' => [
+                null,
+            ],
+            'readable' => [
+                true,
+            ],
+            'writable' => [
+                true,
+            ],
+            'readableLink' => [
+                null,
+            ],
+            'writableLink' => [
+                null,
+            ],
+            'required' => [
+                false,
+            ],
+            'identifier' => [
+                null,
+            ],
+            'default' => [
+                null,
+            ],
+            'example' => [
+                null,
+            ],
+            'deprecationReason' => [
+                null,
+            ],
+            'fetchable' => [
+                null,
+            ],
+            'fetchEager' => [
+                null,
+            ],
+            'jsonldContext' => [
+                null,
+            ],
+            'openapiContext' => [
+                null,
+            ],
+            'jsonSchemaContext' => [
+                null,
+            ],
+            'push' => [
+                null,
+            ],
+            'security' => [
+                null,
+            ],
+            'securityPostDenormalize' => [
+                null,
+            ],
+            'builtinTypes' => [
+                [
+                    $o[2],
+                ],
+            ],
+            'schema' => [
+                [
+                    'pattern' => '^(\\+44\\d{10})$',
+                    'type' => 'string',
+                ],
+            ],
+            'initializable' => [
+                false,
+            ],
+            'genId' => [
+                null,
+            ],
+            'uriTemplate' => [
+                null,
+            ],
+            'property' => [
+                null,
+            ],
+            'policy' => [
+                null,
+            ],
+            'hydra' => [
+                null,
+            ],
+            'extraProperties' => [
+                [],
+            ],
+        ],
+        'Symfony\\Component\\TypeInfo\\Type\\BuiltinType' => [
+            'typeIdentifier' => [
+                1 => \Symfony\Component\TypeInfo\TypeIdentifier::STRING,
+            ],
+        ],
+        'Symfony\\Component\\PropertyInfo\\Type' => [
+            'builtinType' => [
+                2 => 'string',
+            ],
+            'nullable' => [
+                2 => false,
+            ],
+            'class' => [
+                2 => null,
+            ],
+            'collection' => [
+                2 => false,
+            ],
+            'collectionKeyType' => [
+                2 => [],
+            ],
+            'collectionValueType' => [
+                2 => [],
+            ],
+        ],
+    ],
+    $o[0],
+    []
+); } }];

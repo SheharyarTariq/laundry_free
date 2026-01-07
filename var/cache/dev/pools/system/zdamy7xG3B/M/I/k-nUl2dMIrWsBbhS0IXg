@@ -1,0 +1,892 @@
+<?php //resource_metadata_collection_1888504f734bd02c
+
+return [PHP_INT_MAX, new class() implements \Symfony\Component\Cache\Traits\CachedValueInterface { public function getValue(): mixed { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['ApiPlatform\\Metadata\\ApiResource'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('ApiPlatform\\Metadata\\ApiResource')),
+        clone ($p['ApiPlatform\\Metadata\\Operations'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('ApiPlatform\\Metadata\\Operations')),
+        clone ($p['ApiPlatform\\Metadata\\Post'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('ApiPlatform\\Metadata\\Post')),
+        clone ($p['ApiPlatform\\Metadata\\NotExposed'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('ApiPlatform\\Metadata\\NotExposed')),
+        clone ($p['ApiPlatform\\Metadata\\Link'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('ApiPlatform\\Metadata\\Link')),
+        clone $p['ApiPlatform\\Metadata\\Post'],
+        clone $p['ApiPlatform\\Metadata\\Post'],
+    ],
+    null,
+    [
+        'ApiPlatform\\Metadata\\ApiResource' => [
+            'shortName' => [
+                'ResetPassword',
+            ],
+            'class' => [
+                'App\\ApiResource\\User\\ResetPassword',
+            ],
+            'description' => [
+                null,
+            ],
+            'urlGenerationStrategy' => [
+                null,
+            ],
+            'deprecationReason' => [
+                null,
+            ],
+            'normalizationContext' => [
+                null,
+            ],
+            'denormalizationContext' => [
+                null,
+            ],
+            'collectDenormalizationErrors' => [
+                null,
+            ],
+            'validationContext' => [
+                null,
+            ],
+            'filters' => [
+                null,
+            ],
+            'order' => [
+                null,
+            ],
+            'fetchPartial' => [
+                null,
+            ],
+            'forceEager' => [
+                null,
+            ],
+            'paginationEnabled' => [
+                null,
+            ],
+            'paginationType' => [
+                null,
+            ],
+            'paginationItemsPerPage' => [
+                null,
+            ],
+            'paginationMaximumItemsPerPage' => [
+                null,
+            ],
+            'paginationPartial' => [
+                null,
+            ],
+            'paginationClientEnabled' => [
+                null,
+            ],
+            'paginationClientItemsPerPage' => [
+                null,
+            ],
+            'paginationClientPartial' => [
+                null,
+            ],
+            'paginationFetchJoinCollection' => [
+                null,
+            ],
+            'paginationUseOutputWalkers' => [
+                null,
+            ],
+            'security' => [
+                null,
+            ],
+            'securityMessage' => [
+                null,
+            ],
+            'securityPostDenormalize' => [
+                null,
+            ],
+            'securityPostDenormalizeMessage' => [
+                null,
+            ],
+            'securityPostValidation' => [
+                null,
+            ],
+            'securityPostValidationMessage' => [
+                null,
+            ],
+            'stateOptions' => [
+                null,
+            ],
+            'rules' => [
+                null,
+            ],
+            'queryParameterValidationEnabled' => [
+                null,
+            ],
+            'strictQueryParameterValidation' => [
+                null,
+            ],
+            'hideHydraOperation' => [
+                null,
+            ],
+            'jsonStream' => [
+                null,
+            ],
+            'extraProperties' => [
+                [],
+            ],
+            'operations' => [
+                $o[1],
+            ],
+            'uriTemplate' => [
+                null,
+            ],
+            'types' => [
+                null,
+            ],
+            'formats' => [
+                null,
+            ],
+            'inputFormats' => [
+                null,
+            ],
+            'outputFormats' => [
+                null,
+            ],
+            'uriVariables' => [
+                [],
+            ],
+            'routePrefix' => [
+                null,
+            ],
+            'defaults' => [
+                null,
+            ],
+            'requirements' => [
+                null,
+            ],
+            'options' => [
+                null,
+            ],
+            'stateless' => [
+                true,
+            ],
+            'sunset' => [
+                null,
+            ],
+            'acceptPatch' => [
+                null,
+            ],
+            'status' => [
+                null,
+            ],
+            'host' => [
+                null,
+            ],
+            'schemes' => [
+                null,
+            ],
+            'condition' => [
+                null,
+            ],
+            'controller' => [
+                null,
+            ],
+            'headers' => [
+                null,
+            ],
+            'cacheHeaders' => [
+                [
+                    'vary' => [
+                        'Content-Type',
+                        'Authorization',
+                        'Origin',
+                    ],
+                ],
+            ],
+            'hydraContext' => [
+                null,
+            ],
+            'openapi' => [
+                null,
+            ],
+            'paginationViaCursor' => [
+                null,
+            ],
+            'compositeIdentifier' => [
+                null,
+            ],
+            'exceptionToStatus' => [
+                null,
+            ],
+            'links' => [
+                null,
+            ],
+            'graphQlOperations' => [
+                null,
+            ],
+        ],
+        'ApiPlatform\\Metadata\\Metadata' => [
+            'policy' => [
+                null,
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'middleware' => [
+                null,
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'map' => [
+                null,
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'rules' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'queryParameterValidationEnabled' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+        ],
+        'ApiPlatform\\Metadata\\Operations' => [
+            'operations' => [
+                1 => [
+                    [
+                        '_api_/reset-password/request_post',
+                        $o[2],
+                    ],
+                    [
+                        '_api_/.well-known/genid/{id}{._format}_get',
+                        $o[3],
+                    ],
+                    [
+                        '_api_/reset-password/confirm_post',
+                        $o[5],
+                    ],
+                    [
+                        '_api_/change-password_post',
+                        $o[6],
+                    ],
+                ],
+            ],
+        ],
+        'ApiPlatform\\Metadata\\Operation' => [
+            'shortName' => [
+                2 => 'ResetPassword',
+                'ResetPassword',
+                5 => 'ResetPassword',
+                'ResetPassword',
+            ],
+            'class' => [
+                2 => 'App\\ApiResource\\User\\ResetPassword',
+                'App\\ApiResource\\User\\ResetPassword',
+                5 => 'App\\ApiResource\\User\\ResetPassword',
+                'App\\ApiResource\\User\\ResetPassword',
+            ],
+            'description' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'urlGenerationStrategy' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'deprecationReason' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'normalizationContext' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'denormalizationContext' => [
+                2 => [
+                    'groups' => [
+                        'ResetPassword:Request',
+                    ],
+                ],
+                null,
+                5 => [
+                    'groups' => [
+                        'ResetPassword:Confirm',
+                    ],
+                ],
+                [
+                    'groups' => [
+                        'ResetPassword:W$ChangePassword',
+                    ],
+                ],
+            ],
+            'collectDenormalizationErrors' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'validationContext' => [
+                2 => [
+                    'groups' => [
+                        'Default',
+                        'Valid(ResetPassword:Request)',
+                    ],
+                ],
+                null,
+                5 => [
+                    'groups' => [
+                        'Default',
+                        'Valid(ResetPassword:Confirm)',
+                    ],
+                ],
+                [
+                    'groups' => [
+                        'Default',
+                        'Valid(ResetPassword:Change)',
+                    ],
+                ],
+            ],
+            'filters' => [
+                2 => [],
+                [],
+                5 => [],
+                [],
+            ],
+            'order' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'fetchPartial' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'forceEager' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'paginationEnabled' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'paginationType' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'paginationItemsPerPage' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'paginationMaximumItemsPerPage' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'paginationPartial' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'paginationClientEnabled' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'paginationClientItemsPerPage' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'paginationClientPartial' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'paginationFetchJoinCollection' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'paginationUseOutputWalkers' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'security' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'securityMessage' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'securityPostDenormalize' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'securityPostDenormalizeMessage' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'securityPostValidation' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'securityPostValidationMessage' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'processor' => [
+                2 => 'App\\Processor\\User\\ResetPasswordRequestProcessor',
+                5 => 'App\\Processor\\User\\ResetPasswordConfirmProcessor',
+                'App\\Processor\\User\\ChangePasswordProcessor',
+            ],
+            'stateOptions' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'jsonStream' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'extraProperties' => [
+                2 => [
+                    'user_defined_uri_template' => true,
+                ],
+                [
+                    'generated_operation' => true,
+                ],
+                5 => [
+                    'user_defined_uri_template' => true,
+                ],
+                [
+                    'user_defined_uri_template' => true,
+                ],
+            ],
+            'read' => [
+                2 => null,
+                false,
+                5 => null,
+                null,
+            ],
+            'deserialize' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'validate' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'write' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'serialize' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'priority' => [
+                2 => 0,
+                null,
+                5 => 1,
+                2,
+            ],
+            'name' => [
+                2 => '_api_/reset-password/request_post',
+                '_api_/.well-known/genid/{id}{._format}_get',
+                5 => '_api_/reset-password/confirm_post',
+                '_api_/change-password_post',
+            ],
+            'output' => [
+                3 => [
+                    'class' => null,
+                ],
+            ],
+        ],
+        'ApiPlatform\\Metadata\\HttpOperation' => [
+            'strictQueryParameterValidation' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'hideHydraOperation' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'paginationViaCursor' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'inputFormats' => [
+                2 => [
+                    'jsonld' => [
+                        'application/ld+json',
+                    ],
+                ],
+                [
+                    'jsonld' => [
+                        'application/ld+json',
+                    ],
+                ],
+                5 => [
+                    'jsonld' => [
+                        'application/ld+json',
+                    ],
+                ],
+                [
+                    'jsonld' => [
+                        'application/ld+json',
+                    ],
+                ],
+            ],
+            'outputFormats' => [
+                2 => [
+                    'jsonld' => [
+                        'application/ld+json',
+                    ],
+                ],
+                [
+                    'jsonld' => [
+                        'application/ld+json',
+                    ],
+                ],
+                5 => [
+                    'jsonld' => [
+                        'application/ld+json',
+                    ],
+                ],
+                [
+                    'jsonld' => [
+                        'application/ld+json',
+                    ],
+                ],
+            ],
+            'method' => [
+                2 => 'POST',
+                'GET',
+                5 => 'POST',
+                'POST',
+            ],
+            'uriTemplate' => [
+                2 => '/reset-password/request',
+                '/.well-known/genid/{id}{._format}',
+                5 => '/reset-password/confirm',
+                '/change-password',
+            ],
+            'types' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'uriVariables' => [
+                2 => [],
+                [
+                    'id' => $o[4],
+                ],
+                5 => [],
+                [],
+            ],
+            'routePrefix' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'routeName' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'defaults' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'requirements' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'options' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'stateless' => [
+                2 => true,
+                true,
+                5 => true,
+                true,
+            ],
+            'sunset' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'acceptPatch' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'status' => [
+                2 => 200,
+                404,
+                5 => 200,
+                200,
+            ],
+            'host' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'schemes' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'condition' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'controller' => [
+                2 => 'api_platform.symfony.main_controller',
+                'api_platform.action.not_exposed',
+                5 => 'api_platform.symfony.main_controller',
+                'api_platform.symfony.main_controller',
+            ],
+            'headers' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'cacheHeaders' => [
+                2 => [
+                    'vary' => [
+                        'Content-Type',
+                        'Authorization',
+                        'Origin',
+                    ],
+                ],
+                [
+                    'vary' => [
+                        'Content-Type',
+                        'Authorization',
+                        'Origin',
+                    ],
+                ],
+                5 => [
+                    'vary' => [
+                        'Content-Type',
+                        'Authorization',
+                        'Origin',
+                    ],
+                ],
+                [
+                    'vary' => [
+                        'Content-Type',
+                        'Authorization',
+                        'Origin',
+                    ],
+                ],
+            ],
+            'hydraContext' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'openapi' => [
+                2 => null,
+                false,
+                5 => null,
+                null,
+            ],
+            'exceptionToStatus' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'links' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+            'errors' => [
+                2 => null,
+                null,
+                5 => null,
+                null,
+            ],
+        ],
+        'ApiPlatform\\Metadata\\Post' => [
+            'itemUriTemplate' => [
+                2 => null,
+                5 => null,
+                null,
+            ],
+        ],
+        'ApiPlatform\\Metadata\\Parameter' => [
+            'key' => [
+                4 => null,
+            ],
+            'schema' => [
+                4 => null,
+            ],
+            'openApi' => [
+                4 => null,
+            ],
+            'provider' => [
+                4 => null,
+            ],
+            'filter' => [
+                4 => null,
+            ],
+            'property' => [
+                4 => null,
+            ],
+            'description' => [
+                4 => null,
+            ],
+            'properties' => [
+                4 => null,
+            ],
+            'required' => [
+                4 => null,
+            ],
+            'priority' => [
+                4 => null,
+            ],
+            'hydra' => [
+                4 => null,
+            ],
+            'constraints' => [
+                4 => null,
+            ],
+            'security' => [
+                4 => null,
+            ],
+            'securityMessage' => [
+                4 => null,
+            ],
+            'extraProperties' => [
+                4 => [],
+            ],
+            'filterContext' => [
+                4 => null,
+            ],
+            'nativeType' => [
+                4 => null,
+            ],
+            'castToArray' => [
+                4 => null,
+            ],
+            'castToNativeType' => [
+                4 => null,
+            ],
+            'castFn' => [
+                4 => null,
+            ],
+        ],
+        'ApiPlatform\\Metadata\\Link' => [
+            'parameterName' => [
+                4 => 'id',
+            ],
+            'fromProperty' => [
+                4 => null,
+            ],
+            'toProperty' => [
+                4 => null,
+            ],
+            'fromClass' => [
+                4 => 'App\\ApiResource\\User\\ResetPassword',
+            ],
+            'toClass' => [
+                4 => null,
+            ],
+            'identifiers' => [
+                4 => [
+                    'id',
+                ],
+            ],
+            'compositeIdentifier' => [
+                4 => null,
+            ],
+            'expandedValue' => [
+                4 => null,
+            ],
+            'securityObjectName' => [
+                4 => null,
+            ],
+        ],
+    ],
+    [
+        $o[0],
+    ],
+    []
+); } }];
